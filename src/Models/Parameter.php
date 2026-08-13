@@ -9,18 +9,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Zitro\Parameters\Enums\ParameterType;
 
 /**
- * Model Parameter
- *
- * Representa la entidad encargada de almacenar los parámetros
- * del sistema, soportando asignaciones globales o polimórficas.
+ * @property ParameterType $type
  */
 class Parameter extends Model
 {
-    /**
-     * Los atributos que son asignables en masa.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'parameterable_type',
         'parameterable_id',
@@ -50,7 +42,7 @@ class Parameter extends Model
     }
 
     /**
-     * Relación polimórfica hacia el modelo dueño del parámetro (ej: User, Team, etc.).
+     * @return MorphTo<Model, $this>
      */
     public function parameterable(): MorphTo
     {
@@ -65,7 +57,7 @@ class Parameter extends Model
      * @param  mixed  $value  El valor crudo de la base de datos.
      * @return mixed El valor transformado según su tipo configurado.
      */
-    public function getValueAttribute($value): mixed
+    public function getValueAttribute(mixed $value): mixed
     {
         return $this->type->cast($value);
     }
