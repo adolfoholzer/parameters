@@ -43,9 +43,7 @@ php artisan migrate
 
 ## Usage
 
----
-
-# 🚀 Uso Básico
+### Uso Básico
 
 El paquete permite trabajar con dos tipos de parámetros:
 
@@ -54,9 +52,7 @@ El paquete permite trabajar con dos tipos de parámetros:
 
 Todos los valores son almacenados tipados y recuperados automáticamente con su tipo nativo correspondiente.
 
----
-
-# 🌐 Parámetros Globales
+### Parámetros Globales
 
 Para administrar configuraciones globales utiliza la Facade:
 
@@ -65,9 +61,7 @@ use Parameters;
 use Zitro\Parameters\Enums\ParameterType;
 ```
 
----
-
-## Guardar Parámetros
+#### Guardar Parámetros
 
 ```php
 Parameters::set(
@@ -90,9 +84,7 @@ Parameters::set(
 );
 ```
 
----
-
-## Obtener Parámetros
+#### Obtener Parámetros
 
 Los valores son retornados automáticamente con su tipo correspondiente.
 
@@ -107,9 +99,7 @@ $countries = Parameters::get('allowed_countries');
 // ['UY', 'AR', 'BR']
 ```
 
----
-
-## Valores por Defecto
+#### Valores por Defecto
 
 ```php
 $logo = Parameters::get(
@@ -118,9 +108,7 @@ $logo = Parameters::get(
 );
 ```
 
----
-
-## Eliminar Parámetros
+#### Eliminar Parámetros
 
 ```php
 Parameters::forget('site_iva');
@@ -128,9 +116,7 @@ Parameters::forget('site_iva');
 
 La caché asociada será invalidada automáticamente.
 
----
-
-# 🧩 Parámetros Asociados a Modelos
+### Parámetros Asociados a Modelos
 
 Puedes almacenar configuraciones específicas para cualquier entidad de tu sistema.
 
@@ -142,9 +128,7 @@ Por ejemplo:
 * Proyectos
 * Organizaciones
 
----
-
-## Preparar un Modelo
+#### Preparar un Modelo
 
 Agregar el trait `HasParameters`:
 
@@ -160,9 +144,7 @@ class Team extends Model
 }
 ```
 
----
-
-## Guardar Parámetros
+#### Guardar Parámetros
 
 ```php
 use Zitro\Parameters\Enums\ParameterType;
@@ -183,9 +165,7 @@ $team->setParameter(
 );
 ```
 
----
-
-## Obtener Parámetros
+#### Obtener Parámetros
 
 ```php
 $maxUsers = $team->getParameter('max_users');
@@ -195,17 +175,13 @@ $modules = $team->getParameter('modules_enabled');
 // ['crm', 'billing']
 ```
 
----
-
-## Eliminar Parámetros
+#### Eliminar Parámetros
 
 ```php
 $team->forgetParameter('max_users');
 ```
 
----
-
-# 🧠 Tipos Soportados
+### Tipos Soportados
 
 El paquete incluye soporte nativo para:
 
@@ -219,9 +195,7 @@ El paquete incluye soporte nativo para:
 
 La conversión se realiza automáticamente utilizando el tipo definido al almacenar el parámetro.
 
----
-
-# ⚡ Sistema de Caché
+### Sistema de Caché
 
 Para minimizar consultas repetidas a la base de datos, el paquete incorpora una capa de caché transparente.
 
@@ -238,8 +212,6 @@ Configuración:
 'use_cache' => true,
 'cache_ttl' => 3600,
 ```
-
----
 
 ## Changelog
 
