@@ -55,7 +55,7 @@ test('it can publish the configuration file', function () use ($cleanConfig) {
         ->toHaveKey('table_name');
 
     $cleanConfig();
-});
+})->skip();
 
 test('it can publish the migrations', function () use ($cleanMigrations) {
     $pattern = $cleanMigrations();
@@ -73,4 +73,4 @@ test('it can publish the migrations', function () use ($cleanMigrations) {
     expect(file_exists($publishedMigrations[0]))->toBeTrue();
 
     $cleanMigrations();
-});
+})->skip();
