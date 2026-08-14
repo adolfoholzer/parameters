@@ -43,32 +43,32 @@ php artisan migrate
 
 ## Usage
 
-### Uso Básico
+### Basic Usage
 
-El paquete permite trabajar con dos tipos de parámetros:
+The package supports two types of parameters:
 
-* Parámetros globales del sistema
-* Parámetros asociados a modelos específicos
+* Global system parameters
+* Parameters associated with specific models
 
-Todos los valores son almacenados tipados y recuperados automáticamente con su tipo nativo correspondiente.
+All values are stored with an explicit type and automatically cast back to their corresponding native type when retrieved.
 
-### Parámetros Globales
+### Global Parameters
 
-Para administrar configuraciones globales utiliza la Facade:
+Use the `Parameters` Facade to manage global configuration:
 
 ```php
 use Parameters;
 use Zitro\Parameters\Enums\ParameterType;
 ```
 
-#### Guardar Parámetros
+#### Storing Parameters
 
 ```php
 Parameters::set(
     'site_iva',
     22.5,
     ParameterType::FLOAT,
-    'IVA general del comercio'
+    'General sales tax rate'
 );
 
 Parameters::set(
@@ -84,9 +84,9 @@ Parameters::set(
 );
 ```
 
-#### Obtener Parámetros
+#### Retrieving Parameters
 
-Los valores son retornados automáticamente con su tipo correspondiente.
+Values are automatically returned with their corresponding native type.
 
 ```php
 $iva = Parameters::get('site_iva');
@@ -99,7 +99,7 @@ $countries = Parameters::get('allowed_countries');
 // ['UY', 'AR', 'BR']
 ```
 
-#### Valores por Defecto
+#### Default values
 
 ```php
 $logo = Parameters::get(
@@ -108,29 +108,29 @@ $logo = Parameters::get(
 );
 ```
 
-#### Eliminar Parámetros
+#### Removing parameters
 
 ```php
 Parameters::forget('site_iva');
 ```
 
-La caché asociada será invalidada automáticamente.
+The associated cache entry will be automatically invalidated.
 
-### Parámetros Asociados a Modelos
+### Model-Specific Parameters
 
-Puedes almacenar configuraciones específicas para cualquier entidad de tu sistema.
+You can store configuration values for any entity in your application.
 
-Por ejemplo:
+For example:
 
-* Usuarios
-* Equipos
-* Clientes
-* Proyectos
-* Organizaciones
+* Users
+* Teams
+* Customers
+* Projects
+* Organizations
 
-#### Preparar un Modelo
+#### Preparing a Model
 
-Agregar el trait `HasParameters`:
+Add the `HasParameters` trait to your model:
 
 ```php
 namespace App\Models;
@@ -144,7 +144,7 @@ class Team extends Model
 }
 ```
 
-#### Guardar Parámetros
+#### Storing Parameters
 
 ```php
 use Zitro\Parameters\Enums\ParameterType;
@@ -155,7 +155,7 @@ $team->setParameter(
     'max_users',
     15,
     ParameterType::INT,
-    'Límite de usuarios contratados'
+    'Maximum number of subscribed users'
 );
 
 $team->setParameter(
@@ -165,7 +165,7 @@ $team->setParameter(
 );
 ```
 
-#### Obtener Parámetros
+#### Retrieving Parameters
 
 ```php
 $maxUsers = $team->getParameter('max_users');
@@ -175,17 +175,17 @@ $modules = $team->getParameter('modules_enabled');
 // ['crm', 'billing']
 ```
 
-#### Eliminar Parámetros
+#### Removing Parameters
 
 ```php
 $team->forgetParameter('max_users');
 ```
 
-### Tipos Soportados
+### Supported Types
 
-El paquete incluye soporte nativo para:
+The package provides native support for:
 
-| Tipo    | Valor Devuelto |
+| Type    | Returned Value |
 | ------- | -------------- |
 | STRING  | string         |
 | INT     | int            |
@@ -193,20 +193,20 @@ El paquete incluye soporte nativo para:
 | BOOLEAN | bool           |
 | JSON    | array          |
 
-La conversión se realiza automáticamente utilizando el tipo definido al almacenar el parámetro.
+Values are automatically cast using the type defined when the parameter is stored.
 
-### Sistema de Caché
+### Caching
 
-Para minimizar consultas repetidas a la base de datos, el paquete incorpora una capa de caché transparente.
+To minimize repeated database queries, the package includes a transparent caching layer.
 
-Características:
+Features:
 
-* Caché independiente para parámetros globales
-* Caché segmentada para parámetros polimórficos
-* Invalidación automática al actualizar valores
-* TTL configurable
+* Independent caching for global parameters
+* Segmented caching for polymorphic parameters
+* Automatic cache invalidation when values are updated
+* Configurable TTL
 
-Configuración:
+Configuration:
 
 ```php
 'use_cache' => true,
